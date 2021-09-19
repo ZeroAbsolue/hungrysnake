@@ -49,8 +49,8 @@ public class Cellule {
     @Override
     public String toString() {
         return "{" +
-            " ligne = '" + ligne + "'" +
-            ", colonne = '" + colonne  + "'" +
+            " ligne ='" + ligne + "'" +
+            ", colonne ='" + colonne  + "'" +
             "}";
     }
     
