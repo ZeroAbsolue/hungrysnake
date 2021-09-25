@@ -8,7 +8,7 @@ pipeline {
               
                         sh 'mvn clean compile test'
                     
-                }
+                
             }
         }
     }
