@@ -11,11 +11,13 @@ public class PartieTest {
     Action action;
     int colonne =4;
     int ligne = 4;
+    Cellule cellule;
 
     @Before
     public void setup(){
         action = Action.AUCUN;
-        partie  = new Partie(new Cellule(ligne, colonne),action);
+        cellule = new Cellule(ligne, colonne);
+        partie  = new Partie(cellule,action);
     }
         
     @Test
@@ -28,6 +30,18 @@ public class PartieTest {
         assertEquals(ligne-1,(int)partie.morceau.ligne );
         partie.descendre();
         assertEquals(ligne, (int)partie.morceau.ligne );
+        partie.setAction(Action.DESCENDRE);
+        partie.bouger();
+        partie.setMorceau(cellule);
+        assertEquals(cellule, partie.getMorceau() );
+    }
+
+    @Test
+    public void toStringTest() {
+        assertEquals("{" +
+        " partie='" + partie.getMorceau() + "'" +
+        ", action='" + partie.getAction() + "'" +
+        "}", partie.toString()); 
     }
 }
     

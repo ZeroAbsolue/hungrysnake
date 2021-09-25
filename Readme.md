@@ -36,7 +36,7 @@ En fait ce que nous allons faire ce sera d'ecrire un seul script dans un fichier
 Nous allons configurer le projet afin que le build se fait à partir d'un jenkinsfile
 ![](src/Screenshot_16.png)
 
-Nous allons profiter aussi pendant la configuration pour ajouter les identifiants de token crée sur github.
+Nous allons profiter aussi pendant la configuration pour ajouter les identifiants de token(credentials) crée sur github.
 ![](src/Screenshot_15.png)
 
 

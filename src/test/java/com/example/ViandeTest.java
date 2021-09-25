@@ -19,6 +19,8 @@ public class ViandeTest {
 
     @Test
     public void nouvellePositionTest() {
+        viande = new Viande(new Airedejeu(1, 1));
+        assertEquals((new Cellule(1, 1)).toString(), viande.nouvellePosition().toString());
         Cellule cellule = new Cellule(1, 1);
         viande = mock(Viande.class);
         when(viande.nouvellePosition()).thenReturn(cellule);

@@ -38,4 +38,13 @@ public class AiredejeuTest {
         assertEquals(cellule.colonne, airedejeu.centre().colonne);
         assertEquals(cellule.ligne, airedejeu.centre().ligne);
     }
+
+    @Test
+    public void toStringTest() {
+        assertEquals( " Aire de jeu {" +
+            " nombre Ligne='" + nombreLigne + "'" +
+            ", nombre Colonne='" + nombreColonne + "'" +
+            ", nombre Cellule='" + nombreLigne*nombreColonne + "'" +
+            "}",airedejeu.toString());
+    }
 }

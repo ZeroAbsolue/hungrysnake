@@ -13,7 +13,7 @@ public class Serpent {
         manger(cellule, Action.AUCUN);
     }
 
-    public Integer taille() {
+    public int taille() {
         return this.corps.size();
     }
 
@@ -76,22 +76,6 @@ public class Serpent {
     @Override
     public String toString() {
         return "Serpent {" + afficherCorps() + "'" + "taille '" + corps.size() + "}";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Serpent)) {
-            return false;
-        }
-        Serpent serpent = (Serpent) o;
-        return Objects.equals(corps, serpent.corps);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(corps);
     }
 
 }

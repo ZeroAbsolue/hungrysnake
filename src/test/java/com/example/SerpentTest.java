@@ -21,10 +21,6 @@ public class SerpentTest {
         cellule4 = new Cellule(3, 4);
         cellule5 = new Cellule(2, 4);
         serpent = new Serpent(cellule);
-
-        // serpent.manger(cellule2,Action.AUCUN);
-        // serpent.deplacer(Action.DROITE);
-        // serpent.manger(cellule3,Action.AUCUN);
     }
 
     @Test
@@ -47,45 +43,26 @@ public class SerpentTest {
         assertEquals(Action.GAUCHE, serpent.corps.get(2).action);
         assertEquals(Action.MONTER, serpent.corps.get(3).action);
         assertEquals(Action.AUCUN, serpent.corps.get(4).action);
-        serpent.deplacer(Action.DROITE);
+        serpent.allerADroite();
         assertEquals(Action.MONTER, serpent.corps.get(0).action);
         assertEquals(Action.GAUCHE, serpent.corps.get(1).action);
         assertEquals(Action.MONTER, serpent.corps.get(2).action);
         assertEquals(Action.DROITE, serpent.corps.get(3).action);
         assertEquals(Action.AUCUN, serpent.corps.get(4).action);
+        serpent.monter();
+        serpent.allerAGauche();
+        serpent.descendre();
+        assertEquals(Action.DROITE, serpent.corps.get(0).action);
+        assertEquals(Action.MONTER, serpent.corps.get(1).action);
+        assertEquals(Action.GAUCHE, serpent.corps.get(2).action);
+        assertEquals(Action.DESCENDRE, serpent.corps.get(3).action);
+        assertEquals(Action.AUCUN, serpent.corps.get(4).action);
+        assertEquals(5,serpent.taille());
+      
     }
 
-    // @Test
-    // public void allerDroiteTest() {
-    // serpent.allerADroite();
-    // cellule.colonne++;
-    // assertEquals(cellule, serpent.tete);
-    // }
-
-    // @Test
-    // public void allerGaucheTest() {
-    // serpent.allerAGauche();
-    // cellule.colonne--;
-    // assertEquals(cellule, serpent.tete);
-    // }
-
-    // @Test
-    // public void monterTest() {
-    // serpent.monter();
-    // cellule.ligne--;
-    // assertEquals(cellule, serpent.tete);
-    // }
-
-    // @Test
-    // public void descendreTest() {
-    // serpent.descendre();
-    // cellule.ligne++;
-    // assertEquals(cellule, serpent.tete);
-    // }
-
-    // @Test
-    // public void mangerTest() {
-    // serpent.manger(new Cellule(4, 5));
-    // assertEquals(cellule, serpent.tete);
-    // }
+    @Test
+    public void toStringTest() {
+        assertEquals("Serpent {{ ligne ='4', colonne ='4'}AUCUN'taille '1}",serpent.toString());
+    }
 }
