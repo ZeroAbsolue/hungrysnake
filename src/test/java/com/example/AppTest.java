@@ -1,20 +1,20 @@
 package com.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * Unit test for simple App.
  */
-class AppTest {
+public class AppTest {
     /**
      * Rigorous Test.
      */
     @Test
-    void testApp() {
+    public  void testApp() {
         int nombreLigne = 4;
         int nombreColonne = 4;
         Airedejeu airedejeu = new Airedejeu(nombreLigne, nombreColonne);

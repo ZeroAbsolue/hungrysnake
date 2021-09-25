@@ -1,9 +1,9 @@
 package com.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PartieTest {
 
@@ -12,7 +12,7 @@ public class PartieTest {
     int colonne =4;
     int ligne = 4;
 
-    @BeforeEach
+    @Before
     public void setup(){
         action = Action.AUCUN;
         partie  = new Partie(new Cellule(ligne, colonne),action);
@@ -21,13 +21,13 @@ public class PartieTest {
     @Test
     public void test() {
         partie.allerADroite();
-        assertEquals(colonne+1, partie.morceau.colonne);
+        assertEquals(colonne+1, (int)partie.morceau.colonne);
         partie.allerAGauche();
-        assertEquals(colonne,partie.morceau.colonne );
+        assertEquals(colonne,(int)partie.morceau.colonne );
         partie.monter();
-        assertEquals(ligne-1,partie.morceau.ligne );
+        assertEquals(ligne-1,(int)partie.morceau.ligne );
         partie.descendre();
-        assertEquals(ligne, partie.morceau.ligne );
+        assertEquals(ligne, (int)partie.morceau.ligne );
     }
 }
     

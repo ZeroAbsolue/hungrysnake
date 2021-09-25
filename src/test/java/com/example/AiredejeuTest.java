@@ -1,16 +1,16 @@
 package com.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 public class AiredejeuTest {
     int nombreLigne = 7;
     int nombreColonne = 7;
     Airedejeu airedejeu;
 
-    @BeforeEach
+    @Before
     public void initialisation() {
 
         airedejeu = new Airedejeu(nombreLigne, nombreColonne);
@@ -24,12 +24,12 @@ public class AiredejeuTest {
 
     @Test
     public void nombreDeCelluleTest() {
-        assertEquals(nombreLigne * nombreColonne, airedejeu.getNombreDeCellule());
+        assertEquals(nombreLigne * nombreColonne, (int)airedejeu.getNombreDeCellule());
     }
 
     @Test
     public void limiteTest() {
-        assertEquals(nombreLigne * nombreColonne, airedejeu.getNombreDeCellule());
+        assertEquals(nombreLigne * nombreColonne, (int)airedejeu.getNombreDeCellule());
     }
 
     @Test

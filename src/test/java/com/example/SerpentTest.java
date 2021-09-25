@@ -1,9 +1,9 @@
 package com.example;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 public class SerpentTest {
     Serpent serpent;
@@ -13,7 +13,7 @@ public class SerpentTest {
     Cellule cellule4;
     Cellule cellule5;
 
-    @BeforeEach
+    @Before
     public void setup() {
         cellule = new Cellule(4, 4);
         cellule2 = new Cellule(4, 5 );
