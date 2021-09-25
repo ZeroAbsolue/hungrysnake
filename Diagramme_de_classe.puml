@@ -1,0 +1,52 @@
+@startuml
+title Diagramme de classe
+
+enum Action{
+    MONTER,
+    GAUCHE,
+    DROITE,
+    DESCENDRE,
+    AUCUN,
+}
+
+class AireDeCheu{
+    +nombreLigne : int
+    +nombreColonne :int
+    +getNombreDeCellule() : int
+    +centre() : Cellule
+
+}
+class Cellule{
+    + ligne : int
+    + colonne : int
+}
+class Partie{
+    morceau : Cellule
+    action : Action
+    allerADroite()
+    allerAGauche() : void
+    monter() : void
+    descendre() : void
+    bouger() : void
+
+}
+
+class Serpent{
+    taille() : int
+    deplacer(Action action) : void
+    allerADroite()
+    allerAGauche() : void
+    monter() : void
+    descendre() : void
+    afficherCorps() : String
+}
+class Viande{
+    nouvellePosition() : Cellule
+}
+
+Serpent *- "*" Partie
+Partie - Cellule
+Partie - "1" Action
+AireDeCheu - "1" Serpent
+AireDeCheu - Viande
+@enduml

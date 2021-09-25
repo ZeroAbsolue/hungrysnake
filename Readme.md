@@ -5,7 +5,7 @@ Une longue créature serpentine se faufile dans un champ limité, obéissant aux
 Tiré de codegym (2021).Hungry Snake - CodeGym. repéré à https://codegym.cc/projects/games/com.codegym.games.snake
 
 # Diagramme de classe
-![](src/Diagramme%20de%20classe.png)
+![](out/DiagrammeDeChoixDeConception2/Diagramme%20de%20classe.svg)
 
 # Intégration continue avec jenkins - sonarqube
 
@@ -26,6 +26,7 @@ Pour generer le token sur github aller sur,
 Settings > Developper settings > Personnal access tokens 
 ```
 puis cliquer sur le bouton générer un nouveau token
+Au niveau du scope, sélectionner repo. Nous voulons uniquement lire, nous ne ferions pas de modification dans le repo
 
 ## 3 - Créer et configurer un projet Jenkins
 Pour le type de projet que nous choisirons de créer dans Jenkins, 
