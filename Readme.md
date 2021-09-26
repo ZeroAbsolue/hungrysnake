@@ -53,6 +53,9 @@ https://www.youtube.com/watch?v=pMO26j2OUME&list=PLy7NrYWoggjw_LIiDK1LXdNN82uYuu
 
 ## 4 - Installer Sonarqube et le plugin sonarqube scanner
 ### Installation de Sonarqube
+```
+NB: Avoir une version de docker >= 20.10.5
+```
 Pour installer Sonarqube, nous allons utiliser un conteneur docker.
 Comme SonarQube utilise un Elasticsearch intégré, assurez-vous que la configuration de votre hôte Docker est conforme aux exigences du mode de production d'Elasticsearch et à la configuration des descripteurs de fichiers. 
 Si vous êtes sur une machine linux: executez ces commandes.
