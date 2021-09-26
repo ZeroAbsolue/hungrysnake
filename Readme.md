@@ -42,7 +42,7 @@ En fait ce que nous allons faire ce sera d'ecrire un seul script dans un fichier
 Au niveau de __branch sources__ cliquer sur __add sources__ et specifier __vos credentials github(token a la place du mot de passe)__ ainsi que le repository. Pour le credentials à la place du password spécifier le token créer sur github token
 ![](src/Screenshot_15.png)
 
-Nous allons configurer le projet afin que le build se fait à partir d'un jenkinsfile
+Nous allons configurer le projet afin que le build se fasse à partir d'un jenkinsfile
 ![](src/Screenshot_16.png)
 
 
@@ -54,9 +54,21 @@ https://www.youtube.com/watch?v=pMO26j2OUME&list=PLy7NrYWoggjw_LIiDK1LXdNN82uYuu
 ## 4 - Installer Sonarqube et le plugin sonarqube scanner
 ### Installation de Sonarqube
 Pour installer Sonarqube, nous allons utiliser un conteneur docker.
-Comme SonarQube utilise un Elasticsearch intégré, assurez-vous que la configuration de votre hôte Docker est conforme aux exigences du mode de production d'Elasticsearch et à la configuration des descripteurs de fichiers
-
-Démarrer un conteneur SonarQube avec un volume persistant attaché :
+Comme SonarQube utilise un Elasticsearch intégré, assurez-vous que la configuration de votre hôte Docker est conforme aux exigences du mode de production d'Elasticsearch et à la configuration des descripteurs de fichiers. 
+Si vous êtes sur une machine linux: executez ces commandes.
+```
+sysctl -w vm.max_map_count=262144
+sysctl -w fs.file-max=65536
+ulimit -n 65536
+ulimit -u 4096
+```
+Ensuite nous allons crée les volumes permettant à notre conteneur de stocker ses informations:
+```
+docker volume create --name sonarqube_data
+docker volume create --name sonarqube_logs
+docker volume create --name sonarqube_extensions
+```
+Démarrer ensuite le conteneur SonarQube avec les volumes persistants attachés :
 ```
 docker run -d -p 9000:9000 -v sonarqube_conf:/opt/sonarqube/conf -v sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs -v sonarqube_data:/opt/sonarqube/data sonarqube
 ```
@@ -68,12 +80,27 @@ Une fois terminé pour vous connectez à sonarqube il faut lancer __localhost:90
 Pour tout ce qui concerne l'installation de sonarqube, vous pouvez aussi suivre ce tutoriel
 https://www.youtube.com/watch?v=ZAfMauwNFuQ&t=750s&ab_channel=Thetips4you
 
+### Crée un token projet dans sonarqube
+Lorsque votre interface sonarqube est lancée, cliquer sur __Administration__. Ensuite cliquer sur sécurity et créer un nouveau utilisateur. Une fois l'utilisateur crée, au niveau de tokens, créer un nouveau token et conserver le token. Le token sera utilisé pour configuré sonarqube scanner
+![](src/Screenshot_2.png)
+
 ### Installation du pluging sonarqube scanner
 Dans jenkins aller sur __manage plugings__, puis __available plugins__, rechercher et installer le plugins SonarQube Scanner for jenkins
 
+### Configuration de sonarqube scanner et de maven
+### 1- Maven
+Dans jenkins, aller dans manager jenkins puis sur global tool configuration. 
+Au niveau de maven, cliquer sur __add maven__ puis au niveau de name: spécifier le nom que vous voulez donner à votre maven aisni que la version puis sur enregistrer.
+Notez que le nom que vous allez donner à votre maven sera utiliser dans le jenkinsfile
+![](src/Screenshot_33.png)
+
+### 2- Sonarqube
+Dans jenkins, aller dans manager jenkins puis sur Configure system.
+Dans la session SonarQube servers, __activer Environment variables__ et dans la partie _SonarQube installations_ spécifier le nom, l'url de connexion à sonarqube ainsi que les identifiants projets crées sur sonarqube et enregistré
+![](src/Screenshot_1.png)
+![](src/Screenshot_20.png) 
 ## 5 - Configuration du jenkinsfile
 Nous allons configuré jenkins afin qu'a chaque build activé, il compile, lance les tests et informe sonarqube pour qu'il analyse la qualité de code
-![](src/Screenshot_17.png).
 
 Vue que jenkins et sonarqube sont sur deux conteneurs différents, il nous faut spécifier dans le jenkinsfile comment ils vont communiquer. En fait il est question de donner une sorte de canal qui permette à sonarqube d'analyser le code. Pour le faire nous avons besoin de l'adresse ip du conteneur de sonarqube.
 
@@ -82,7 +109,9 @@ Ainsi pour obtenir l'adresse que vous voyez dans notre jenkinsfile, il faut se c
 docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sonarqube
 ```
 
-Une fois tout ceci fait, nous lancons le build pour le projet hungrysnake nous avons le resultat suivant pour github 
+![](src/Screenshot_3.png).
+
+Une fois tout ceci fait, nous lancons le build pour le projet hungrysnake dans jenkins et  nous avons le resultat suivant 
 ![](src/Screenshot_18.png)
 
 Celui ci aussi si nous avons configurer sonarqube
