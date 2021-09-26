@@ -62,12 +62,7 @@ sysctl -w fs.file-max=65536
 ulimit -n 65536
 ulimit -u 4096
 ```
-Ensuite nous allons crée les volumes permettant à notre conteneur de stocker ses informations:
-```
-docker volume create --name sonarqube_data
-docker volume create --name sonarqube_logs
-docker volume create --name sonarqube_extensions
-```
+
 Démarrer ensuite le conteneur SonarQube avec les volumes persistants attachés :
 ```
 docker run -d -p 9000:9000 -v sonarqube_conf:/opt/sonarqube/conf -v sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs -v sonarqube_data:/opt/sonarqube/data sonarqube
