@@ -18,6 +18,11 @@ docker run -p 8080:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins
 ```
 Ceci créera automatiquement un volume docker "jenkins_home" sur la machine hôte. Les volumes Docker permettent de conserver leur contenu des informations qui ont été traité dans le conteneur même lorsque ce dernier est arrêté, redémarré ou supprimé. L'espace de travail dans le conteneur sera /var/jenkins_home. Toutes les données de Jenkins s'y trouveront, y compris les plugins et la configuration que nous ferons.
 
+Pour se connecter a l'application de jenkins il faut aller dans le navigateur à l'adresse __localhost:8080__. À la premiere connexion on va vous demander de spécifier le mot de passe administrateur. Ce mot de passe a été généré et afficher sur votre invite de commande lors de l'installation de jenkins en invite de commande
+![](out/DiagrammeDeChoixDeConception2/Screenshot_31.png)
+![](out/DiagrammeDeChoixDeConception2/Screenshot_30.png)
+
+Vous pouvez selectionner d'installer les plugings par défaut de jenkins
 ## 2- Créer les identifiants github_token 
 Pour permettre à jenkins de pouvoir accéder au repository github nous allons génerer des tokens d'accès. Ces tokens d'accès seront configuré dans jenkins
 
@@ -29,16 +34,17 @@ puis cliquer sur le bouton générer un nouveau token
 Au niveau du scope, sélectionner repo. Nous voulons uniquement lire, nous ne ferions pas de modification dans le repo
 
 ## 3 - Créer et configurer un projet Jenkins
-Pour le type de projet que nous choisirons de créer dans Jenkins, 
-nous allons utiliser un Multibranch Pipeline ceci dans le but de faciliter la configuration de ressources et surtout eviter d'avoir à écrire des scripts dans Jenkins.
+Pour créer un nouveau projet, cliquer sur __new job__, en ce qui concerne  le type le type de projet que nous choisirons de créer dans Jenkins, 
+nous allons utiliser un __Multibranch Pipeline__ ceci dans le but de faciliter la configuration de ressources et surtout eviter d'avoir à écrire des scripts dans Jenkins.
 
 En fait ce que nous allons faire ce sera d'ecrire un seul script dans un fichier nommé Jenkinsfile que nous allons conservé sur notre serveur de versionning. L'idée ici est que lorsque nous voulons effectuer certaines actions (test, build) dans jenkins que nous ayons un seul endroit pour modifier les scripts.
+
+Au niveau de __branch sources__ cliquer sur __add sources__ et specifier __vos credentials github(token a la place du mot de passe)__ ainsi que le repository. Pour le credentials à la place du password spécifier le token créer sur github token
+![](src/Screenshot_15.png)
 
 Nous allons configurer le projet afin que le build se fait à partir d'un jenkinsfile
 ![](src/Screenshot_16.png)
 
-Nous allons profiter aussi pendant la configuration pour ajouter les identifiants de token(credentials) crée sur github.
-![](src/Screenshot_15.png)
 
 
 
@@ -49,24 +55,16 @@ https://www.youtube.com/watch?v=pMO26j2OUME&list=PLy7NrYWoggjw_LIiDK1LXdNN82uYuu
 ### Installation de Sonarqube
 Pour installer Sonarqube, nous allons utiliser un conteneur docker.
 Comme SonarQube utilise un Elasticsearch intégré, assurez-vous que la configuration de votre hôte Docker est conforme aux exigences du mode de production d'Elasticsearch et à la configuration des descripteurs de fichiers
-```
-sysctl -w vm.max_map_count=262144
-sysctl -w fs.file-max=65536
-ulimit -n 65536
-ulimit -u 4096
-```
-Démarrez un conteneur de base :
-```
-docker run -d --name sonarqube -p 9000:9000 sonarqube
 
+Démarrer un conteneur SonarQube avec un volume persistant attaché :
+```
+docker run -d -p 9000:9000 -v sonarqube_conf:/opt/sonarqube/conf -v sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs -v sonarqube_data:/opt/sonarqube/data sonarqube
+```
+```
 Nom d'utilisateur : admin
 Mot de passe : admin
 ```
-Démarrer un conteneur SonarQube avec un volume persistant attaché :
-```
-docker run -d -p 9000:9000 -v sonarqube_conf:/opt/sonarqube/conf -v sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs -v sonarqube_data:/opt/sonarqube/data sonarqube.
-```
-
+Une fois terminé pour vous connectez à sonarqube il faut lancer __localhost:9000__
 Pour tout ce qui concerne l'installation de sonarqube, vous pouvez aussi suivre ce tutoriel
 https://www.youtube.com/watch?v=ZAfMauwNFuQ&t=750s&ab_channel=Thetips4you
 
